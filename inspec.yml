@@ -1,0 +1,24 @@
+name: lxc-dnsmasq
+title: LXC Netz dnsmasq
+maintainer: Michael Schaar
+copyright: Michael Schaar
+copyright_email: Michael.Schaar@schulen.nuernberg.de
+license: Apache-2.0
+summary: An InSpec LXC-Net Profile
+version: 0.1.0
+supports:
+  platform: linux
+inputs:
+- name: lxc_net
+  type: Hash
+  value:
+    bridge: 'lxcbr0'
+    domain: 'lxc'
+    ip: '10.0.3.1'
+    range_start: '10.0.3.2'
+    range_end: '10.0.3.254'
+    max_leases: 253
+    netmask: '255.255.255.0'
+    network: '10.0.3.0/24'
+    dnsmasq_conf: '# LXC_DHCP_CONFILE=/etc/lxc/dnsmasq.conf'
+    netzanteil: '10.0.3.'
