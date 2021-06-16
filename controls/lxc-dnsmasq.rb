@@ -34,14 +34,19 @@ control "lxc_net" do
   #              --set-domain=${LXC_DOMAIN:-default}
   # FAILED=0
   describe file('/usr/lib/x86_64-linux-gnu/lxc/lxc-net') do
-    search = /systemd-resolve\s*--interface=.*--set-dns=.*--set-domain=.*/
-    it { should exist }
-    it { should be_file }
-    it { should be_readable }
-    it { should be_writable }
-    it { should be_owned_by 'root' }
-    its('mode') { should cmp '0755' }
-    its('content') { should match search }
+    search = /systemd-resolve\s*.*/
+    search_array = [ "--interface=.*", "--set-dns=.*", "--set-domain=.*" ]
+    search_array.each do |substring|
+        regex = Regexp.new( search.source + substring)
+        #/
+        it { should exist }
+        it { should be_file }
+        it { should be_readable }
+        it { should be_writable }
+        it { should be_owned_by 'root' }
+        its('mode') { should cmp '0755' }
+        its('content') { should match regex }
+    end
   end
 
   
